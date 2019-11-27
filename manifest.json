@@ -4,7 +4,7 @@
     "freshsales": {
       "location": {
         "left_nav_chat": {
-          "url": "template.html",
+          "url": "build/index.html",
           "icon": "icon.svg"
         }
       }
