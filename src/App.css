@@ -20,14 +20,6 @@
   overflow: auto;
 }
 
-.chat-widget-top > .top-items {
-  background: #F8F8F8;
-  border-radius: 10px;
-  padding: 20px;
-  margin-bottom: 10px;
-  font-weight: 600;
-}
-
 .chat-widget-bottom {
   position: absolute;
   bottom: 0;
@@ -46,25 +38,95 @@
   min-height: 34px;
   border-radius: 10px;
   padding: 6px;
-  padding-right: 48px;
+  padding-left: 43px;
   border: 1px solid #ddd;
 }
 
-.microphone-container {
+/* .list-container-icon {
   position: relative;
-}
+} */
 
-.microphone-container .microphone {
+.hamburger {
   position: absolute;
-  top: 5px;
-  display: flex;
-  right: 20px;
+  top: 4px;
+  left: 5px;
+  background: none;
+  border: none;
+  outline: none;
 }
 
-.microphone-container .microphone img {
+.hamburger img {
   height: 24px;
   background: #ddd;
   border-radius: 50%;
   padding: 4px;
   cursor: pointer;
+}
+
+.top-items-absolute-container {
+  position: absolute;
+  width: 340px;
+  height: 200px;
+  left: 0;
+  bottom: 40px;
+  border-radius: 6px;
+  border: 1px solid #dddfe2;
+  overflow: auto;
+}
+
+/* .top-items-relative-container {
+  position: relative;
+}
+
+.top-items-relative-container:after, .top-items-relative-container:before {
+	top: 100%;
+	left: 50%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+}
+
+.top-items-relative-container:after {
+	border-color: rgba(136, 183, 213, 0);
+	border-top-color: #88b7d5;
+	border-width: 30px;
+	margin-left: -30px;
+}
+.top-items-relative-container:before {
+	border-color: rgba(194, 225, 245, 0);
+	border-top-color: #c2e1f5;
+	border-width: 36px;
+	margin-left: -36px;
+} */
+
+.top-items-container-header {
+  padding: 10px;
+  color: #000;
+  font-weight: 600;
+  text-align: center;
+  border-bottom: 1px solid #dddfe2;
+}
+
+.top-items-relative-container > .top-items-container-list {
+  padding: 10px;
+  font-weight: 600;
+  color: #0084ff;
+  border-bottom: 1px solid #dddfe2;
+  cursor: pointer;
+}
+
+.microphone-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.microphone-icon {
+  background: none;
+  border: none;
+  outline: none;
 }
