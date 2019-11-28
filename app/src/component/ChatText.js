@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import FilterOperatorTransformer from '../utils/filter-operator-transformer';
 import APP from '../services/client';
 
-function ChatText({transcription = '', chatText}) {
+function ChatText({transcription = '', chatText, getListItems}) {
   const [value, setValue] = useState(transcription);
 
   useEffect(() => {
@@ -18,13 +18,23 @@ function ChatText({transcription = '', chatText}) {
           'Content-Type': 'application/json',
         }
       }
-      
-      APP.client.request.post("https://0f2ac3c8.ngrok.io/api/filters", options).then(
-        function(data) {
-          console.log('----- DEBUGGING: data params -----');
-          let response = JSON.parse(data.response);
-          console.log(response);
-          APP.postMessage(
+
+      let postFilter = new Promise((resolve, reject) => {
+        resolve(APP.client.request.post("https://0f2ac3c8.ngrok.io/api/filters", options))
+      })
+
+      let setInDB = new Promise((resolve, reject) => {
+        resolve(APP.client.db.set(`${APP.currentUser.id}`, { "listItems": [...getListItems, {key: value}] }))
+      });
+
+      postFilter.then((data) => {
+        console.log('----- DEBUGGING: data params -----');
+        let response = JSON.parse(data.response);
+        return response;
+      }).then((response) => {
+        return setInDB.then(() => {
+          console.log('APP.postMessage');
+          return APP.postMessage(
             {
               actor: "navigateToListView",
               entity: response.result.model,
@@ -42,12 +52,11 @@ function ChatText({transcription = '', chatText}) {
                 )
               )
             }
-          );
-        },
-        function(error) {
-          console.log('client.request error', error)
-        }
-      );
+          );;
+        })
+      }).catch(e => {
+        console.log('client.request error', e);
+      });
     }
   }
   return (
