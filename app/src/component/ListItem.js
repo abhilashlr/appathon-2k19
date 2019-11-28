@@ -1,6 +1,14 @@
 import React, {Component, Fragment} from 'react';
+import styled, { keyframes } from 'styled-components';
+import { bounce } from 'react-animations';
 import APP from '../services/client';
 
+// const animatedProps = useSpring({opacity: 1, from: {opacity: 0}});
+const bounceAnimation = keyframes`${bounce}`;
+
+const BouncyDiv = styled.div`
+  animation: 1s ${bounceAnimation};
+`;
 class ListItem extends Component {
   constructor(props) {
     super(props);
@@ -14,6 +22,8 @@ class ListItem extends Component {
       console.log(data);
       // [TODO]: Use this to render the list of recents used.
     });
+
+    console.log(BouncyDiv);
 
     const {listItemView} = this.state;
 
@@ -33,14 +43,14 @@ class ListItem extends Component {
           </button>
         {/* </div> */}
         {listItemView ?
-        <div className="top-items-absolute-container">
-          <div className="top-items-relative-container">
-            <div className="top-items-container-header">Top asks</div>
-            <div className="top-items-container-list">Freddy the robot</div>
-            <div className="top-items-container-list">Kamal the dirty</div>
-            <div className="top-items-container-list">Monday syed</div>
-          </div>
-        </div> : null}
+          <BouncyDiv className="top-items-absolute-container">
+            <div className="top-items-relative-container">
+              <div className="top-items-container-header">Top asks</div>
+              <div className="top-items-container-list">Freddy the robot</div>
+              <div className="top-items-container-list">Kamal the dirty</div>
+              <div className="top-items-container-list">Monday syed</div>
+            </div>
+          </BouncyDiv> : null}
       </Fragment>
     )
   }
