@@ -1,4 +1,5 @@
 import React, {Component, Fragment} from 'react';
+import APP from '../services/client';
 
 class ListItem extends Component {
   constructor(props) {
@@ -9,6 +10,11 @@ class ListItem extends Component {
   }
 
   render() {
+    APP.client.db.get(`${APP.currentUser.id}`).then(data => {
+      console.log(data);
+      // [TODO]: Use this to render the list of recents used.
+    });
+
     const {listItemView} = this.state;
 
     const toggleListItem = () => {
@@ -16,6 +22,7 @@ class ListItem extends Component {
         listItemView: !prevState.listItemView,
       }));
     }
+
     console.log('listItemView', listItemView);
     
     return (
