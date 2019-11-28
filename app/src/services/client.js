@@ -53,20 +53,6 @@ const APP = {
     });
   },
 
-  /**
-   * Store the list of last used bookmark in MP Datastore.
-   */
-  cacheList() {
-    this.client.db.update(`${this.currentUser.id}`, "append", {
-      recentUsed: [
-        {
-          id: "1",
-          text: "Get me leads last contacted in the last month"
-        }
-      ]
-    });
-  },
-
   // [TODO]
   /**
    * In case of not supportive MP events, use `postMessage` and send the feed

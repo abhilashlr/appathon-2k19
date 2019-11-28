@@ -24,25 +24,36 @@ function ChatText({transcription = '', chatText}) {
           console.log('----- DEBUGGING: data params -----');
           let response = JSON.parse(data.response);
           console.log(response);
-          APP.postMessage(
-            {
-              actor: "navigateToListView",
-              entity: response.result.model,
-              queryParams: encodeURI(
-                JSON.stringify(
-                  FilterOperatorTransformer(
-                    Object.assign(
-                      {},
-                      {
-                        entity: response.result.model
-                      }, 
-                      response.result.filters[0]
-                    )
-                  )
+
+          switch(response.result.intent) {
+            case 'query':
+              let transformedQP = FilterOperatorTransformer(
+                Object.assign(
+                  {},
+                  {
+                    entity: response.result.model
+                  }, 
+                  response.result.filters[0]
                 )
-              )
-            }
-          );
+              );
+              APP.postMessage(
+                {
+                  actor: "navigateToListView",
+                  entity: response.result.model,
+                  queryParams: transformedQP ? encodeURI(
+                    JSON.stringify(transformedQP)
+                  ) : []
+                }
+              );
+              return;
+            case 'invoke_modal':
+              APP.client.interface.trigger("open", {
+                id: response.result.model
+              });
+              return;
+            default:
+              // [TODO]: Error case;
+          }
         },
         function(error) {
           console.log('client.request error', error)

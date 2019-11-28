@@ -66,11 +66,11 @@ function transformer({
   let value = OPERATOR_VALUES[operatorValue] || operatorValue;
   let operator = OPERANDS[operandValue] || operandValue;
 
-  return {
+  return value && operator ? {
     name: FIELDS[`${entity}_${underscorize(field)}`],
     value: ARRAY_OPERANDS.includes(operandValue) ? [value] : value,
     operator
-  };
+  } : null;
 }
 
 function underscorize(key) {
