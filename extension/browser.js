@@ -20,7 +20,11 @@ function navigateToDetailPage({ entity, entityID }) {
 }
 
 function navigateToListView({ entity, queryParams }) {
-  window.location.replace(_urlParameterize(`${window.location.origin}/${_pluralize(entity)}/view/custom?q[]=${queryParams}&`));
+  let url = _urlParameterize(`${window.location.origin}/${_pluralize(entity)}/view/custom?q[]=${queryParams}&`);
+
+  console.log(url);
+
+  window.location.replace(url);
 }
 
 function _urlParameterize(url) {

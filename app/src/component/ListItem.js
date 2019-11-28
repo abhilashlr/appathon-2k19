@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 // import APP from '../services/client';
+import APP from '../services/client';
 
 class ListItem extends Component {
   constructor(props) {
@@ -19,9 +20,7 @@ class ListItem extends Component {
       this.setState(prevState => ({
         listItemView: !prevState.listItemView,
       }));
-    }
-
-    // console.log('listItemView', listItemView);
+    };
     
     return (
       <Fragment>

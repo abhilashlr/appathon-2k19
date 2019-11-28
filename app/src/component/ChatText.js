@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import FilterOperatorTransformer from '../utils/filter-operator-transformer';
 import APP from '../services/client';
 
 function ChatText({transcriptedValue}) {
@@ -20,16 +21,33 @@ function ChatText({transcriptedValue}) {
       }
       console.log('APP', APP.client);
       
-      APP.client.request.post("https://26425e78.ngrok.io/api/filters", options).then(
+      APP.client.request.post("https://0f2ac3c8.ngrok.io/api/filters", options).then(
         function(data) {
-          let response = JSON.parse(data);
-          console.log('client.request data', data.response);
-          //handle "data"
-          //"data" is a json string with status, headers, and response.
+          console.log('----- DEBUGGING: data params -----');
+          let response = JSON.parse(data.response);
+          console.log(response);
+          APP.postMessage(
+            {
+              actor: "navigateToListView",
+              entity: response.result.model,
+              queryParams: encodeURI(
+                JSON.stringify(
+                  FilterOperatorTransformer(
+                    Object.assign(
+                      {},
+                      {
+                        entity: response.result.model
+                      }, 
+                      response.result.filters[0]
+                    )
+                  )
+                )
+              )
+            }
+          );
         },
         function(error) {
           console.log('client.request error', error)
-          //handle failure
         }
       );
     }
@@ -46,4 +64,3 @@ function ChatText({transcriptedValue}) {
 }
 
 export default ChatText;
-

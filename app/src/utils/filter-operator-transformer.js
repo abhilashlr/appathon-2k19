@@ -56,9 +56,9 @@ const ARRAY_OPERANDS = ['contains']
 
 function transformer({
   entity,
-  field,
-  operatorValue,
-  operandValue
+  operand: field,
+  value: operatorValue,
+  operator: operandValue
 }) {
   let value = OPERATOR_VALUES[operatorValue] || operatorValue;
   let operator = OPERANDS[operandValue] || operandValue;
