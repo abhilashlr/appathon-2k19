@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import APP from '../services/client';
 
 function ChatText({transcriptedValue}) {
   const [value, setValue] = useState(transcriptedValue);
@@ -11,23 +12,26 @@ function ChatText({transcriptedValue}) {
     if (e.which === 13) {
       console.log('making network request');
       
-      let fetchData = { 
-        method: 'POST', 
-        body: {text: value},
-        headers: new Headers({
-          'Content-Type': 'application/json'
-        })
+      let options = { 
+        body: JSON.stringify({text: value}),
+        headers: {
+          'Content-Type': 'application/json',
+        }
       }
-      fetch("https://f0a67f8f.ngrok.io", fetchData) // Call the fetch function passing the url of the API as a parameter
-      .then((resp) => {
-        console.log('response', resp.json());
-        // (resp) => resp.json()
-          // Your code for handling the data you get from the API
-      })
-      .catch(function(e) {
-        console.log('erroe in fetch', e);
-          // This is where you run code if the server returns any errors
-      });
+      console.log('APP', APP.client);
+      
+      APP.client.request.post("https://26425e78.ngrok.io/api/filters", options).then(
+        function(data) {
+          let response = JSON.parse(data);
+          console.log('client.request data', data.response);
+          //handle "data"
+          //"data" is a json string with status, headers, and response.
+        },
+        function(error) {
+          console.log('client.request error', error)
+          //handle failure
+        }
+      );
     }
   }
   return (
