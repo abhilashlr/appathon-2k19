@@ -18,7 +18,8 @@ class App extends Component {
       this.setState({
         listenSpeech: true,
         openChat: false,
-        listViewOpened: false
+        listViewOpened: false,
+        speechEnded: false
       })
     }
 
@@ -26,23 +27,32 @@ class App extends Component {
       this.setState({
         openChat: true,
         listenSpeech: false,
-        listViewOpened: false
+        listViewOpened: false,
+        speechEnded: false
       })
     }
 
     const toggleListView = () => {
       this.setState(prevState => ({
         listViewOpened: !prevState.listViewOpened,
+        speechEnded: false,
+        listenSpeech: false,
       }));
     }
 
-    const {listenSpeech, openChat, listViewOpened} = this.state;
+    const toggleListenSpeech = () => {
+      this.setState({
+        speechEnded: true
+      });
+    }
+
+    const {listenSpeech, openChat, listViewOpened, speechEnded} = this.state;
     
     return (
       <div className="chat-widget">
         <div className="chat-widget-top">
           <div className="message">
-            {listenSpeech || openChat ? null : <p className="welcome">Good Morning, Abhilash</p>}
+            <p className={`welcome ${listenSpeech || openChat ? 'animated fadeOutUp' : null}`}>Good Morning, Abhilash</p>
             <p className="support">What can i help u with?</p>
           </div>
         </div>
@@ -54,6 +64,8 @@ class App extends Component {
             openChat={openChat}
             toggleListView={toggleListView}
             listViewOpened={listViewOpened}
+            toggleListenSpeech={toggleListenSpeech}
+            speechEnded={speechEnded}
           />
         </div>
       </div>

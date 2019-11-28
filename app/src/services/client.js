@@ -15,8 +15,6 @@ const APP = {
     return Promise.all([this.fetchLoggedInUser(), this.fetchCurrentDomain()]).then(
       () => {
         this.cacheList();
-
-        this.requestFilter();
       }
     );
   },
@@ -67,27 +65,6 @@ const APP = {
         }
       ]
     });
-  },
-
-  // [TODO]
-  /**
-   * Fetch data from the API (filters). Move next data processing for
-   * query construction.
-   */
-  requestFilter() {
-    this.client.request.get("URL", {}).then(
-      data => {
-        //handle "data"
-        //"data" is a json string with status, headers, and response.
-      },
-      () => {
-        this.client.interface.trigger("showNotify", {
-          type: "danger",
-          message:
-            "There was an error processing your request. Please try later"
-        });
-      }
-    );
   },
 
   // [TODO]

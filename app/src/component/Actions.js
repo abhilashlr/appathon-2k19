@@ -12,18 +12,22 @@ export default function Actions({
   chatClick,
   openChat,
   toggleListView,
-  listViewOpened
+  listViewOpened,
+  toggleListenSpeech,
+  speechEnded
 }) {
   const micSelected = !listViewOpened && !openChat;
   return (
     <div className="assistant-icons">
-      <button type="button" className={`wrapper ${listViewOpened ? `selected` : ``}`} onClick={toggleListView}><img src={menu} /></button>
-      <button type="button" className={`wrapper ${micSelected ? `selected` : ``}`} onClick={micClick}><img src={microphone} /></button>
-      <button type="button" className={`wrapper ${openChat ? `selected` : ``}`}onClick={chatClick}><img src={keyboard} /></button>
-      {listenSpeech ? 
-          <Microphone /> : null
-      }
-      {openChat ? <ChatText transcription='' chatText /> : null}
+      <div className="assistant-icons-wrap">
+        <button type="button" className={`wrapper ${listViewOpened ? `selected` : ``}`} onClick={toggleListView}><img src={menu} /></button>
+        <button type="button" className={`wrapper ${micSelected ? `selected` : ``}`} onClick={micClick}><img src={microphone} /></button>{listenSpeech ? <div class="ripple"></div> : null}
+        <button type="button" className={`wrapper ${openChat ? `selected` : ``}`}onClick={chatClick}><img src={keyboard} /></button>
+        {listenSpeech || speechEnded ? 
+            <Microphone toggleListenSpeech={toggleListenSpeech} /> : null
+        }
+        {openChat ? <ChatText transcription='' chatText /> : null}
+      </div>
       <ListItem listViewOpened={listViewOpened} />
     </div>
   )

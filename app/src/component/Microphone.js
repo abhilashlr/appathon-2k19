@@ -25,7 +25,7 @@ class Microphone extends Component {
       recognizer = new window.SpeechRecognition();
       this.setState({
         recognizer
-      })
+      });
       // Recogniser doesn't stop listening even if the user pauses
       recognizer.continuous = false;
   
@@ -55,10 +55,18 @@ class Microphone extends Component {
   
       // Listen for errors
       recognizer.onerror = event => {
+        console.log('recognizer.onerror');
+        this.props.toggleListenSpeech();
         this.setState(prevState => ({
           logError: 'Recognition error: ' + event.message + '<br />' + prevState.logError
         }));
       };
+
+      recognizer.onend = () => {
+        console.log('recognizer.onend');
+        
+        this.props.toggleListenSpeech();
+      }
     }
 
     recognizer.start();

@@ -3630,6 +3630,10 @@
   }
 }
 
+body {
+  overflow: hidden;
+}
+
 #root {
   width: 100%;
   height: 100%;
@@ -3684,12 +3688,17 @@
 }
 
 .chat-widget-bottom .assistant-icons {
+  width: 100%;
+}
+
+.chat-widget-bottom .assistant-icons-wrap {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
-  padding: 20px;
+  padding: 0 20px 24px;
   position: relative;
+  background: white;
+  z-index: 10;
 }
 
 .chat-widget-bottom .assistant-icons .wrapper {
@@ -3703,6 +3712,8 @@
   cursor: pointer;
   border: none;
   outline: none;
+  position: relative;
+  z-index: 1;
 }
 
 .chat-widget-bottom .assistant-icons .wrapper img {
@@ -3722,7 +3733,7 @@
 
 .chat-text-window {
   position: absolute;
-  top: -50px;
+  top: -100px;
   left: 0;
   width: 100%;
 }
@@ -3792,7 +3803,7 @@
   position: absolute;
   width: 80%;
   left: 20px;
-  bottom: 80px;
+  bottom: 70px;
   border-radius: 6px;
   border: 1px solid #dddfe2;
   overflow: auto;
@@ -3856,3 +3867,53 @@
   border: none;
   outline: none;
 } */
+
+.ripple {
+  position: absolute;
+  z-index: 0;
+  top: calc(50% - 12px);
+  left: calc(50% - 1px);
+}
+.ripple,
+.ripple::before,
+.ripple::after {
+  animation: rip 2s infinite;
+  display: block;
+  border-radius: 2px;
+  width: 2px;
+  height: 2px;
+}
+
+.ripple::before,
+.ripple::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.ripple::before {
+  -webkit-animation-delay: .4s;
+  -moz-animation-delay: .4s;
+  animation-delay: .4s;
+}
+
+.ripple::after {
+  -webkit-animation-delay: .6s;
+  -moz-animation-delay: .6s;
+  animation-delay: .6s;
+}
+
+@keyframes rip {
+  0% {
+    box-shadow: 0 0 0 0 transparent, 0 0 0 0 transparent, 0 0 0 0 transparent, 0 0 0 0 transparent;
+  }
+
+  5% {
+    box-shadow: 0 0 0 0 #333, 0 0 0 0 #fff, 0 0 0 0 #333333, 0 0 0 0 rgba(0,0,0,.08);
+  }
+
+  100% {
+    box-shadow: 0 0 4px 48px #ffffff, 0 0 4px 48px transparent, 0 0 4px 40px #fff, 0 0 4px 48px transparent;
+  }
+}
