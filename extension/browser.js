@@ -12,17 +12,19 @@ window.onmessage = ({
     return;
   }
 
-  let { actor, entity, entityID } = data.params;
-
-  window[actor](entity, entityID);
+  window[data.params.actor](data.params);
 };
 
-function navigateToDetailPage(entity, entityID) {
-  window.location.replace(_urlParameterize(`${window.location.origin}/${_pluralize(entity)}/show/${entityID}`));
+function navigateToDetailPage({ entity, entityID }) {
+  window.location.replace(_urlParameterize(`${window.location.origin}/${_pluralize(entity)}/show/${entityID}?`));
+}
+
+function navigateToListView({ entity, queryParams }) {
+  window.location.replace(_urlParameterize(`${window.location.origin}/${_pluralize(entity)}/view/custom?q[]=${queryParams}&`));
 }
 
 function _urlParameterize(url) {
-  return `${url}?dev=true`;
+  return `${url}dev=true`;
 }
 
 function _pluralize(value) {
