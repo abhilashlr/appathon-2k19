@@ -1,32 +1,60 @@
 import React, {Component} from 'react';
-import ListItem from './component/ListItem';
-import Microphone from './component/Microphone';
-import ChatText from './component/ChatText';
+import Actions from './component/Actions';
 import './App.css';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state={
-      trsanscriptedValue: ''
+      trsanscriptedValue: '',
+      listenSpeech: false,
+      openChat: false,
+      listViewOpened: false
     }
   }
   render() {
     window.recognising = false;
-    const setTranscript = transcriptedValue => {
+    const micClick = () => {
       this.setState({
-        transcriptedValue
-      });
+        listenSpeech: true,
+        openChat: false,
+        listViewOpened: false
+      })
     }
-    const {transcriptedValue} = this.state;
+
+    const chatClick = () => {
+      this.setState({
+        openChat: true,
+        listenSpeech: false,
+        listViewOpened: false
+      })
+    }
+
+    const toggleListView = () => {
+      this.setState(prevState => ({
+        listViewOpened: !prevState.listViewOpened,
+      }));
+    }
+
+    const {listenSpeech, openChat, listViewOpened} = this.state;
+    
     return (
       <div className="chat-widget">
         <div className="chat-widget-top">
-          <Microphone transcript={setTranscript} />
+          <div className="message">
+            {listenSpeech || openChat ? null : <p className="welcome">Good Morning, Abhilash</p>}
+            <p className="support">What can i help u with?</p>
+          </div>
         </div>
         <div className="chat-widget-bottom">
-          <ListItem />
-          <ChatText transcriptedValue={transcriptedValue} />
+          <Actions 
+            micClick={micClick}
+            listenSpeech={listenSpeech}
+            chatClick={chatClick}
+            openChat={openChat}
+            toggleListView={toggleListView}
+            listViewOpened={listViewOpened}
+          />
         </div>
       </div>
     );

@@ -1,39 +1,18 @@
 import React, {Component} from 'react';
+import ChatText from './ChatText';
 
 class Microphone extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      micListening: false,
-      recognising: false,
-      micWaitExceeds: false,
-      stopMic: false,
+      recognising: true,
       transcription: '',
-      logError: ''
+      logError: '',
+      speechEnded: false
     }
   }
-  componentDidUpdate(prevProps, prevState) {
-    // Typical usage (don't forget to compare props):
-    // recognising
-    // micWaitExceeds
-    // console.log("this", this.state);
-    // console.log("prevState", prevState);
-    const {micWaitExceeds, recognising, micListening} = this.state;
-    const {prevMicWaitExceeds, prevRecognising, prevMicListening} = prevState;
-    const micWaitExists = (prevMicWaitExceeds !== micWaitExceeds) && micWaitExceeds;
-    const noRecognising = (recognising !== prevRecognising) && !recognising;
-    const micListeningCheck = (prevMicListening !== micListening) && micListening;
 
-    if(micWaitExists && noRecognising && micListeningCheck) {
-      this.setState({
-        stopMic: true,
-        micListening: false
-      })
-    }
-  }
-  render () {
-    const {transcription, logError, recognising, micWaitExceeds, stopMic, micListening} = this.state;
-    const {transcript} = this.props;
+  componentDidMount() {
     var recognizer;
 
     window.SpeechRecognition = window.SpeechRecognition       ||
@@ -44,14 +23,15 @@ class Microphone extends Component {
       // not supported
     } else {
       recognizer = new window.SpeechRecognition();
-  
+      this.setState({
+        recognizer
+      })
       // Recogniser doesn't stop listening even if the user pauses
       recognizer.continuous = true;
   
       // Start recognising
       recognizer.onresult = event => {
         this.setState({
-          recognising: true,
           transcription: '',
         });
   
@@ -59,19 +39,16 @@ class Microphone extends Component {
           if (event.results[i].isFinal) {
             this.setState({
               transcription: event.results[i][0].transcript,
-              micWaitExceeds: false
+              speechEnded: true
             });
-            transcript(event.results[i][0].transcript);
-            // console.log('recognizer in isFinal stopped', recognizer);
-            // recognizer.stop();
+            
+            recognizer.stop();
             
             // + ' (Confidence: ' + event.results[i][0].confidence + ')'
-            // transcription.textContent = event.results[i][0].transcript + ' (Confidence: ' + event.results[i][0].confidence + ')';
           } else {
             this.setState(prevState => ({
               transcription: prevState.transcription + event.results[i][0].transcript
             }));
-            // transcription.textContent += event.results[i][0].transcript;
           }
         }
       };
@@ -81,53 +58,46 @@ class Microphone extends Component {
         this.setState(prevState => ({
           logError: 'Recognition error: ' + event.message + '<br />' + prevState.logError
         }));
-        // log.innerHTML = 'Recognition error: ' + event.message + '<br />' + log.innerHTML;
       };
     }
 
-    const listenForSpeech = () => {
-      recognizer.interimResults = false;
+    recognizer.start();
 
-      try {
-        this.setState({
-          micListening: true
-        });
-        recognizer.start();
-        transcript('');
-        setTimeout(() => {
-          this.setState({
-            micWaitExceeds: true
-          });
-        }, 5000);
-        this.setState(prevState => ({
-          logError: 'Recognition started' + '<br />' + prevState.logError
-        }));
-        // log.innerHTML = 'Recognition started' + '<br />' + log.innerHTML;
-      } catch(ex) {
-        this.setState(prevState => ({
-          logError: 'Recognition error: ' + ex.message + '<br />' + prevState.logError
-        }));
-        // log.innerHTML = 'Recognition error: ' + ex.message + '<br />' + log.innerHTML;
-      }
-    }
-    // console.log('transcription ->', transcription);
-    // console.log('logError -> ', logError);
-    // console.log('recognising', recognising);
+    // stop it automatically after 5s
+    // setTimeout(() => {
+    //   this.setState({
+    //     recognising: false
+    //   }, () => {
+        
+    //   });
+    //   // stopListening should happen only when speechEnded is true
+    //   // this.props.stopListening();
+    // }, 5000);
 
-    if(stopMic && !micListening) {
-      // check this properly and stop while after speaking - coming multiple times
-      // working properly when u don't speak
-      // console.log('recognizer in stopmic coz u havent spoke anything', recognizer);
-      
-      recognizer.stop();
-    }
+  }
+
+  // componentDidUpdate(prevProps, prevState) {
+  //   // console.log('this.state', this.state);
+  //   // console.log('prevState', prevState);
+  //   if(prevState.recognising && !this.state.recognising) {
+  //     if (this.state.speechEnded && !prevState.speechEnded) {
+  //       // console.log('stop recognising in if loop');
+  //       this.props.stopListening()
+  //     } 
+  //     // else if((!this.state.recognising && prevState.recognising) && !this.state.speechEnded && !prevState.speechEnded) {
+  //     //   // not speoken - close the text and shut the mic
+  //     //   // console.log('stop recognising in else loop');
+  //     //   this.state.recognizer.stop();
+  //     //   this.props.stopListening()
+  //     // }
+  //   }
+  // }
+
+  render () {
+    const {transcription} = this.state;
 
     return (
-      <div className="microphone-container">
-        <button type="button" className="microphone-icon" onClick={listenForSpeech}>
-          <img alt="Microphone" src="https://img.icons8.com/ios-glyphs/30/000000/microphone.png"></img>
-        </button>
-      </div>
+      <ChatText transcription={transcription} />
     )
   }
 }
