@@ -27,7 +27,7 @@ class Microphone extends Component {
         recognizer
       })
       // Recogniser doesn't stop listening even if the user pauses
-      recognizer.continuous = true;
+      recognizer.continuous = false;
   
       // Start recognising
       recognizer.onresult = event => {
