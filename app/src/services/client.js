@@ -12,11 +12,7 @@ const APP = {
     console.log('---INIT---');
     console.log(this.client);
 
-    return Promise.all([this.fetchLoggedInUser(), this.fetchCurrentDomain()]).then(
-      () => {
-        this.cacheList();
-      }
-    );
+    return Promise.all([this.fetchLoggedInUser(), this.fetchCurrentDomain()]);
   },
 
   /**

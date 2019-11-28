@@ -9,7 +9,8 @@ class App extends Component {
       trsanscriptedValue: '',
       listenSpeech: false,
       openChat: false,
-      listViewOpened: false
+      listViewOpened: false,
+      getListItems: []
     }
   }
   render() {
@@ -46,7 +47,13 @@ class App extends Component {
       });
     }
 
-    const {listenSpeech, openChat, listViewOpened, speechEnded} = this.state;
+    const pushListItems = listItems => {
+      this.setState({
+        getListItems: listItems
+      })
+    }
+
+    const {listenSpeech, openChat, listViewOpened, speechEnded, getListItems} = this.state;
     
     return (
       <div className="chat-widget">
@@ -66,6 +73,8 @@ class App extends Component {
             listViewOpened={listViewOpened}
             toggleListenSpeech={toggleListenSpeech}
             speechEnded={speechEnded}
+            pushListItems={pushListItems}
+            getListItems={getListItems}
           />
         </div>
       </div>
