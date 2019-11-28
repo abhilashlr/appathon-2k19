@@ -11,6 +11,7 @@
     }
   },
   "whitelisted-domains": [
-    "https://www.freshsales.io"
+    "https://www.freshsales.io",
+    "https://f0a67f8f.ngrok.io"
   ]
 }

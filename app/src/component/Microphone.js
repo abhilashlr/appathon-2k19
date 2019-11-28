@@ -62,8 +62,8 @@ class Microphone extends Component {
               micWaitExceeds: false
             });
             transcript(event.results[i][0].transcript);
-            console.log('recognizer in isFinal stopped', recognizer);
-            recognizer.stop();
+            // console.log('recognizer in isFinal stopped', recognizer);
+            // recognizer.stop();
             
             // + ' (Confidence: ' + event.results[i][0].confidence + ')'
             // transcription.textContent = event.results[i][0].transcript + ' (Confidence: ' + event.results[i][0].confidence + ')';
@@ -117,7 +117,7 @@ class Microphone extends Component {
     if(stopMic && !micListening) {
       // check this properly and stop while after speaking - coming multiple times
       // working properly when u don't speak
-      console.log('recognizer in stopmic coz u havent spoke anything', recognizer);
+      // console.log('recognizer in stopmic coz u havent spoke anything', recognizer);
       
       recognizer.stop();
     }
