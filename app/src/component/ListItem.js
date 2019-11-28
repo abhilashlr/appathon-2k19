@@ -19,7 +19,7 @@ class ListItem extends Component {
 
   render() {
     APP.client.db.get(`${APP.currentUser.id}`).then(data => {
-      console.log(data);
+      // console.log(data);
       // [TODO]: Use this to render the list of recents used.
     });
 
@@ -33,7 +33,7 @@ class ListItem extends Component {
       }));
     }
 
-    console.log('listItemView', listItemView);
+    // console.log('listItemView', listItemView);
     
     return (
       <Fragment>
