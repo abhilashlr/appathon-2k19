@@ -25,7 +25,7 @@ export default function Actions({
     <div className="assistant-icons">
       <div className="assistant-icons-wrap">
         <button type="button" className={`wrapper ${listViewOpened ? `selected` : ``}`} onClick={toggleListView}><img src={menu} /></button>
-        <button type="button" className={`wrapper ${micSelected ? `selected` : ``}`} onClick={micClick}><img src={microphone} /></button>{listenSpeech ? <div class="ripple"></div> : null}
+        <button type="button" className={`wrapper ${micSelected ? `selected` : ``}`} onClick={micClick}><img src={microphone} /></button>{listenSpeech && !speechEnded ? <div class="ripple"></div> : null}
         <button type="button" className={`wrapper ${openChat ? `selected` : ``}`}onClick={chatClick}><img src={keyboard} /></button>
         {listenSpeech || speechEnded ? 
             <Microphone toggleListenSpeech={toggleListenSpeech} /> : null

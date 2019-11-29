@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Actions from './component/Actions';
 import './App.css';
+import APP from './services/client';
 
 class App extends Component {
   constructor(props) {
@@ -78,7 +79,7 @@ class App extends Component {
       <div className="chat-widget">
         <div className="chat-widget-top">
           <div className="message">
-            <p className={`welcome ${listenSpeech || openChat ? 'animated fadeOutUp' : null}`}>Good Morning, Abhilash</p>
+            <p className={`welcome ${listenSpeech || openChat ? 'animated fadeOutUp' : null}`}>Good Morning, {APP.currentUser.display_name}</p>
             <p className="support">What can i help u with?</p>
           </div>
         </div>
