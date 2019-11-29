@@ -31,8 +31,8 @@ class App extends Component {
       this.setState({
         openChat: true,
         listenSpeech: false,
-        listViewOpened: false,
         speechEnded: false,
+        listViewOpened: false,
         recentItem: ''
       })
     }
@@ -48,7 +48,6 @@ class App extends Component {
 
     const toggleListenSpeech = () => {
       this.setState({
-        listenSpeech: false,
         speechEnded: true
       });
     }

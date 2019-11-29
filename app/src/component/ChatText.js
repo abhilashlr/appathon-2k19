@@ -80,13 +80,14 @@ function ChatText({transcription = '', chatText, getListItems, fromMic}) {
 
   return (
     <div className="chat-text-window">
-      <textarea 
+      <textarea
         className={`chat-text ${chatText ? `chat-pull-right`: ``}`}
         value={value} 
         onKeyPress={onKeyPress} 
         onChange={e => setValue(e.target.value)} 
         ref={input => input && input.focus()}
       />
+      <div className="arrow"></div>
     </div>
   )
 }

@@ -3746,6 +3746,24 @@ body {
   padding: 10px;
   border: 1px solid #C4C4C4;
   outline: none;
+  resize: none
+}
+
+.chat-text-window .chat-text + .arrow {
+  position: relative;
+  width: 100%;
+}
+
+.chat-text-window .chat-text:not(.chat-pull-right) + .arrow:after {
+  content: "";
+  position: absolute;
+  top: -4px;
+  left: 46%;
+  width: 0;
+  height: 0;
+  border-top: 15px solid #e8e8e8;
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
 }
 
 .chat-text-window .chat-text.chat-pull-right {
@@ -3754,50 +3772,17 @@ body {
   right: 25px;
 }
 
-/* .chat-widget-top {
-  flex: 1;
-  padding: 20px 0;
-  overflow: auto;
-}
-
-.chat-widget-bottom {
-  position: relative;
-  display: flex;
-  justify-content: center;
-}
-
-.chat-text {
-  resize: none;
-  outline: none;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  min-height: 34px;
-  border-radius: 10px;
-  padding: 6px;
-  padding-left: 43px;
-  border: 1px solid #ddd;
-} */
-
-/* .list-container-icon {
-  position: relative;
-} */
-
-/* .hamburger {
+.chat-text-window .chat-text.chat-pull-right + .arrow:after {
+  content: "";
   position: absolute;
-  top: 4px;
-  left: 0;
-  background: none;
-  border: none;
-  outline: none;
+  top: 56px;
+  right: 27px;
+  width: 0;
+  height: 0;
+  border-top: 15px solid #e8e8e8;
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
 }
-
-.hamburger img {
-  height: 24px;
-  border-radius: 50%;
-  padding: 4px;
-  cursor: pointer;
-} */
 
 .top-items-absolute-container {
   position: absolute;
@@ -3814,30 +3799,6 @@ body {
 .top-items-relative-container {
   position: relative;
 }
-
-/* .top-items-relative-container:after, .top-items-relative-container:before {
-	top: 100%;
-	left: 50%;
-	border: solid transparent;
-	content: " ";
-	height: 0;
-	width: 0;
-	position: absolute;
-	pointer-events: none;
-}
-
-.top-items-relative-container:after {
-	border-color: rgba(136, 183, 213, 0);
-	border-top-color: #88b7d5;
-	border-width: 30px;
-	margin-left: -30px;
-}
-.top-items-relative-container:before {
-	border-color: rgba(194, 225, 245, 0);
-	border-top-color: #c2e1f5;
-	border-width: 36px;
-	margin-left: -36px;
-} */
 
 .top-items-container-header {
   padding: 10px;
@@ -3857,19 +3818,6 @@ body {
   border-bottom: 1px solid #dddfe2;
   cursor: pointer;
 }
-
-/* .microphone-container {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-}
-
-.microphone-icon {
-  background: none;
-  border: none;
-  outline: none;
-} */
 
 .ripple {
   position: absolute;

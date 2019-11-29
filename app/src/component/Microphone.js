@@ -43,6 +43,7 @@ class Microphone extends Component {
             });
             
             recognizer.stop();
+            this.props.toggleListenSpeech();
             
             // + ' (Confidence: ' + event.results[i][0].confidence + ')'
           } else {
@@ -62,11 +63,11 @@ class Microphone extends Component {
         }));
       };
 
-      recognizer.onend = () => {
-        console.log('recognizer.onend');
+      // recognizer.onend = () => {
+      //   console.log('recognizer.onend');
         
-        this.props.toggleListenSpeech();
-      }
+      //   this.props.toggleListenSpeech();
+      // }
     }
 
     recognizer.start();
