@@ -106,7 +106,10 @@ class Microphone extends Component {
     const {getListItems} = this.props;
 
     return (
-      <ChatText transcription={transcription} getListItems={getListItems} />
+      <ChatText 
+      transcription={transcription} 
+      getListItems={getListItems}
+      fromMic />
     )
   }
 }

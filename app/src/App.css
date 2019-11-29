@@ -3740,8 +3740,8 @@ body {
 
 .chat-text-window .chat-text {
   position: relative;
-  width: calc(100% - 100px);
-  margin: 0 60px;
+  width: calc(100% - 80px);
+  margin: 0px 40px;
   border-radius: 4px;
   padding: 10px;
   border: 1px solid #C4C4C4;

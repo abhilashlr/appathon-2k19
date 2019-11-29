@@ -48,6 +48,7 @@ class App extends Component {
 
     const toggleListenSpeech = () => {
       this.setState({
+        listenSpeech: false,
         speechEnded: true
       });
     }
@@ -59,7 +60,6 @@ class App extends Component {
     }
 
     const clickedonRecent = recentItem => {
-      console.log('recentItem', recentItem);
       this.setState({
         recentItem,
         openChat: true,

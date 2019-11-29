@@ -31,7 +31,7 @@ export default function Actions({
             <Microphone toggleListenSpeech={toggleListenSpeech} /> : null
         }
         {openChat ? 
-        <ChatText 
+        <ChatText
           transcription={recentItem || ''} 
           chatText 
           getListItems={getListItems} /> : null}

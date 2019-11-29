@@ -2,12 +2,12 @@ import React, {useState, useEffect} from 'react';
 import FilterOperatorTransformer from '../utils/filter-operator-transformer';
 import APP from '../services/client';
 
-function ChatText({transcription = '', chatText, getListItems}) {
+function ChatText({transcription = '', chatText, getListItems, fromMic}) {
   const [value, setValue] = useState(transcription);
 
   useEffect(() => {
     setValue(transcription);
-    if(transcription) {
+    if(transcription && !fromMic) {
       submitData(transcription);
     }
     
@@ -21,7 +21,6 @@ function ChatText({transcription = '', chatText, getListItems}) {
   }
 
   const submitData = text => {
-    console.log('submitData');
     let options = { 
       body: JSON.stringify({text}),
       headers: {
@@ -38,7 +37,7 @@ function ChatText({transcription = '', chatText, getListItems}) {
     });
 
     postFilter.then((data) => {
-      console.log('----- DEBUGGING: data params -----');
+      console.log('----- DEBUGGING: data params -----', data);
       let response = JSON.parse(data.response);
       return response;
     }).then((response) => {
@@ -70,10 +69,11 @@ function ChatText({transcription = '', chatText, getListItems}) {
             });
             return;
           default:
+            console.log('default error switch case');
             // [TODO]: Error case;
         }
       })
-    }, function(error) {
+    }).catch((error) => {
       console.log('client.request error', error)
     });
   }
