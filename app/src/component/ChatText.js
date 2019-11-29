@@ -32,16 +32,17 @@ function ChatText({transcription = '', chatText, getListItems, fromMic}) {
       resolve(APP.client.request.post("https://0f2ac3c8.ngrok.io/api/filters", options))
     });
 
-    let setInDB = new Promise((resolve, reject) => {
-      resolve(APP.client.db.set(`${APP.currentUser.id}`, { "listItems": [...getListItems || [], {key: value}] }))
+    let getFromDB = new Promise((resolve, reject) => {
+      resolve(APP.client.db.get(`${APP.currentUser.id}`))
     });
 
-    postFilter.then((data) => {
-      console.log('----- DEBUGGING: data params -----', data);
-      let response = JSON.parse(data.response);
-      return response;
-    }).then((response) => {
-      return setInDB.then(() => {
+    Promise.all([postFilter, getFromDB]).then(function(values) {
+      console.log('----- DEBUGGING: data params -----', values);
+      let response = JSON.parse(values[0].response);
+      let getListItems = values[1].listItems;
+      new Promise((resolve, reject) => {
+        resolve(APP.client.db.set(`${APP.currentUser.id}`, { "listItems": [...getListItems || [], {key: value}] }))
+      }).then(()=> {
         switch(response.result.intent) {
           case 'query':
             let transformedQP = FilterOperatorTransformer(
@@ -73,8 +74,6 @@ function ChatText({transcription = '', chatText, getListItems, fromMic}) {
             // [TODO]: Error case;
         }
       })
-    }).catch((error) => {
-      console.log('client.request error', error)
     });
   }
 
