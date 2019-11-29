@@ -16,7 +16,9 @@ export default function Actions({
   toggleListenSpeech,
   speechEnded,
   pushListItems,
-  getListItems
+  getListItems,
+  clickedonRecent,
+  recentItem
 }) {
   const micSelected = !listViewOpened && !openChat;
   return (
@@ -28,12 +30,17 @@ export default function Actions({
         {listenSpeech || speechEnded ? 
             <Microphone toggleListenSpeech={toggleListenSpeech} /> : null
         }
-        {openChat ? <ChatText transcription='' chatText getListItems={getListItems} /> : null}
+        {openChat ? 
+        <ChatText 
+          transcription={recentItem || ''} 
+          chatText 
+          getListItems={getListItems} /> : null}
       </div>
       <ListItem 
         listViewOpened={listViewOpened}
         pushListItems={pushListItems}
-        getListItems={getListItems} />
+        getListItems={getListItems}
+        clickedonRecent={clickedonRecent} />
     </div>
   )
 }

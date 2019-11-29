@@ -3851,6 +3851,9 @@ body {
   padding: 10px;
   font-weight: 600;
   color: #0084ff;
+  width: 100%;
+  text-align: left;
+  border: 0;
   border-bottom: 1px solid #dddfe2;
   cursor: pointer;
 }

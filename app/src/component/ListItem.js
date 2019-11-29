@@ -23,13 +23,18 @@ class ListItem extends Component {
   }
 
   render() {
-    const {listViewOpened, getListItems} = this.props;
+    const {listViewOpened, getListItems, clickedonRecent} = this.props;
     return (
       <div className={`animated faster top-items-absolute-container ${listViewOpened ? 'slideInUp' : 'slideOutDown fadeOut'}`}>
         <div className="top-items-relative-container">
-        <div className="top-items-container-header">Top asks</div>
+        <div className="top-items-container-header">Recent asks</div>
         {getListItems && getListItems.slice(getListItems.length - 3).map(item => (
-          <div className="top-items-container-list">{item.key}</div>
+          <button 
+            type="button" 
+            className="top-items-container-list"
+            onClick={() => clickedonRecent(item.key)}>
+            {item.key}
+          </button>
         ))}
         </div>
       </div>

@@ -10,7 +10,8 @@ class App extends Component {
       listenSpeech: false,
       openChat: false,
       listViewOpened: false,
-      getListItems: []
+      getListItems: [],
+      recentItem: ''
     }
   }
   render() {
@@ -20,7 +21,8 @@ class App extends Component {
         listenSpeech: true,
         openChat: false,
         listViewOpened: false,
-        speechEnded: false
+        speechEnded: false,
+        recentItem: ''
       })
     }
 
@@ -29,13 +31,15 @@ class App extends Component {
         openChat: true,
         listenSpeech: false,
         listViewOpened: false,
-        speechEnded: false
+        speechEnded: false,
+        recentItem: ''
       })
     }
 
     const toggleListView = () => {
       this.setState(prevState => ({
         listViewOpened: !prevState.listViewOpened,
+        openChat: false,
         speechEnded: false,
         listenSpeech: false,
       }));
@@ -53,8 +57,23 @@ class App extends Component {
       })
     }
 
-    const {listenSpeech, openChat, listViewOpened, speechEnded, getListItems} = this.state;
-    
+    const clickedonRecent = recentItem => {
+      console.log('recentItem', recentItem);
+      this.setState({
+        recentItem,
+        openChat: true,
+        listViewOpened: false
+      })
+    }
+
+    const {listenSpeech, 
+      openChat, 
+      listViewOpened, 
+      speechEnded, 
+      getListItems,
+      recentItem
+    } = this.state;
+
     return (
       <div className="chat-widget">
         <div className="chat-widget-top">
@@ -75,6 +94,8 @@ class App extends Component {
             speechEnded={speechEnded}
             pushListItems={pushListItems}
             getListItems={getListItems}
+            clickedonRecent={clickedonRecent}
+            recentItem={recentItem}
           />
         </div>
       </div>
