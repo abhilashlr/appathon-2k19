@@ -87,7 +87,9 @@ function ChatText({transcription = '', chatText, getListItems, fromMic}) {
         onChange={e => setValue(e.target.value)} 
         ref={input => input && input.focus()}
       />
-      <div className="arrow"></div>
+      <div className="container-arrow">
+        <div className="arrow"></div>
+      </div>
     </div>
   )
 }
